@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>验证码</title>
+
+    <script>
+        window.onload = function () {
+            /*获取两个控件的点击事件*/
+            let checkcode = document.getElementById("checkcode");
+            let change = document.getElementById("change");
+
+            change.onclick = function () {
+                let time = new Date().getTime();
+                checkcode.src = "/wgl/checkCodeServlet?" + time;
+            }
+
+            checkcode.onclick = function () {
+                let time = new Date().getTime();
+                checkcode.src = "/wgl/checkCodeServlet?" + time;
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<img id="checkcode" src="/wgl/checkCodeServlet"/>
+
+<a id="change" href="">看不清，点击刷新</a>
+
+</body>
+</html>
