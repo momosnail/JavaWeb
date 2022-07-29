@@ -63,76 +63,9 @@ public class CheckCodeServlet extends HttpServlet {
             graphics.drawLine(start_x, start_y, end_x, end_y);
         }
 
-        ImageTypeSpecifier type = ImageTypeSpecifier.createFromRenderedImage(img);
-        System.out.println(type.toString());
-         getImageWriters(type, "abc");
-//        IIORegistry   iter = theRegistry.getServiceProviders(ImageWriterSpi.class,
-//                new ImageIO.CanEncodeImageAndFormatFilter(type,
-//                        formatName),
-//
-//        ImageWriterSpi spi = (ImageWriterSpi)elt;
-
-        // 7.把图片转换为输出流 formatName格式：gif GIF
-        //png
-        //PNG
-        //JPEG
-        //jpeg
-        //JPG
-        //jpg
-        //bmp
-        //BMP
-        //wbmp
-        //WBMP
-        //tif
-        //TIF
-        //tiff
-        //TIFF
+        // 7.把图片转换为输出流 formatName格式：gif、GIF、png、PNG、JPEG、jpeg、JPG、jpg、bmp、BMP、wbmp、WBMP、tif、TIF、tiff、TIFF
         ImageIO.write(img, "png", response.getOutputStream());
     }
 
-    public static void getImageWriters(ImageTypeSpecifier type, String formatName) {
-        IIORegistry theRegistry =
-                IIORegistry.getDefaultInstance();
-        if (type == null) {
-            throw new IllegalArgumentException("type == null!");
-        }
-        if (formatName == null) {
-            throw new IllegalArgumentException("formatName == null!");
-        }
 
-        Iterator<ImageWriterSpi> iter;
-        // Ensure category is present
-        try {
-            iter = theRegistry.getServiceProviders(ImageWriterSpi.class,
-                    new CanEncodeImageAndFormatFilter(type,
-                            formatName),
-                    true);
-        } catch (IllegalArgumentException e) {
-//            return Collections.emptyIterator();
-        }
-
-//        return new ImageIO.ImageWriterIterator(iter);
-    }
-
-    static class CanEncodeImageAndFormatFilter
-            implements ServiceRegistry.Filter {
-
-        ImageTypeSpecifier type;
-        String formatName;
-
-        public CanEncodeImageAndFormatFilter(ImageTypeSpecifier type,
-                                             String formatName) {
-            this.type = type;
-            this.formatName = formatName;
-        }
-
-        public boolean filter(Object elt) {
-            ImageWriterSpi spi = (ImageWriterSpi) elt;
-            for (int i = 0; i < spi.getFormatNames().length; i++) {
-                System.out.println(spi.getFormatNames()[i]);
-            }
-            return Arrays.asList(spi.getFormatNames()).contains(formatName) &&
-                    spi.canEncodeImage(type);
-        }
-    }
 }
