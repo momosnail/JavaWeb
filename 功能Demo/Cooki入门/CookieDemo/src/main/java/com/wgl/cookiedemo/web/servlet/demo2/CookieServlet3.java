@@ -10,6 +10,11 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 需求：
+ *  1. 访问一个Servlet，如果是第一次访问，则提示：您好，欢迎您首次访问
+ *  2. 如果不是第一次访问，则提示：欢迎回来，您上次的访问时间为：显示时间字符串
+ */
 @WebServlet("/CookieServlet3")
 public class CookieServlet3 extends HttpServlet {
     @Override
