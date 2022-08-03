@@ -41,6 +41,12 @@ public class CookieServlet3 extends HttpServlet {
                 // 有该cookie ，不是第一次访问
                 flag = true; //有lastTime的cookie
 
+                // 解码
+                String last_time = cookie.getValue();
+                System.out.println("解码前："+last_time);
+                String decode_time = URLDecoder.decode(last_time, "utf-8");
+                System.out.println("解码后:" + decode_time);
+
                 // 设置cookie的value值
                 // 获取当前世界的字符串，重新设置cookie的值，重新发送cookie
                 Date date = new Date();
@@ -55,15 +61,7 @@ public class CookieServlet3 extends HttpServlet {
                 cookie.setMaxAge(60 * 60 * 24 * 30);
                 response.addCookie(cookie);
 
-                // 响应数目
-                // 获取cookie的value，时间
-                String value = cookie.getValue();
-                System.out.println("解码前："+value);
-                // URL解码
-                value = URLDecoder.decode(value, "utf-8");
-                System.out.println("解码后："+value);
-
-                response.getWriter().write("<h1>欢迎回来，您上次的访问时间为：" + value + "</h1>");
+                response.getWriter().write("<h1>欢迎回来，您上次的访问时间为：" + decode_time + "</h1>");
 
                 break;
 
