@@ -31,9 +31,11 @@ public class LoginServlet extends HttpServlet {
         // 3.先获取生成的验证码
         HttpSession session = request.getSession();
         String checkCode_session = (String) session.getAttribute("checkCode_session");
+        // 删除session中存储的验证码
+        session.removeAttribute("checkCode_session");
 
         // 4.判断验证码是否正确
-        if (checkCode_session.equalsIgnoreCase(checkCode)) { //忽略大小写比较
+        if (checkCode_session != null && checkCode_session.equalsIgnoreCase(checkCode)) { //忽略大小写比较
 
             // 验证码正确
             // 判断用户名和密码是否一致
@@ -43,13 +45,13 @@ public class LoginServlet extends HttpServlet {
 
             UserDao dao = new UserDao();
             User user = dao.login(loginUser);
-            if (user==null){
+            if (user == null) {
                 // 登录失败
                 // 存储提示信息到request
                 request.setAttribute("login_error", "用户名密码错误！");
                 // 转发到登录页面
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
-            }else {
+            } else {
                 // 登录成功
                 // 存储信息，用户信息
                 session.setAttribute("user", username);
